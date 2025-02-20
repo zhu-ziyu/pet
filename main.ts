@@ -13,9 +13,36 @@ input.onGesture(Gesture.Shake, function () {
     }
 })
 function pets () {
-    pet = game.createSprite(2, 3)
-    pet1 = game.createSprite(3, 3)
-    pet2 = game.createSprite(4, 3)
+    pet = game.createSprite(1, 2)
+    pet1 = game.createSprite(2, 2)
+    pet2 = game.createSprite(3, 2)
+    if (pet.get(LedSpriteProperty.X) < 0) {
+        pet.set(LedSpriteProperty.X, 4)
+    } else if (pet.get(LedSpriteProperty.X) > 4) {
+        pet.set(LedSpriteProperty.X, 0)
+    } else if (pet.get(LedSpriteProperty.Y) < 0) {
+        pet.set(LedSpriteProperty.Y, 4)
+    } else if (pet.get(LedSpriteProperty.Y) > 4) {
+        pet.set(LedSpriteProperty.Y, 0)
+    }
+    if (pet1.get(LedSpriteProperty.X) < 0) {
+        pet1.set(LedSpriteProperty.X, 4)
+    } else if (pet1.get(LedSpriteProperty.X) > 4) {
+        pet1.set(LedSpriteProperty.X, 0)
+    } else if (pet1.get(LedSpriteProperty.Y) < 0) {
+        pet1.set(LedSpriteProperty.Y, 4)
+    } else if (pet1.get(LedSpriteProperty.Y) > 4) {
+        pet1.set(LedSpriteProperty.Y, 0)
+    }
+    if (pet2.get(LedSpriteProperty.X) < 0) {
+        pet2.set(LedSpriteProperty.X, 4)
+    } else if (pet2.get(LedSpriteProperty.X) > 4) {
+        pet2.set(LedSpriteProperty.X, 0)
+    } else if (pet2.get(LedSpriteProperty.Y) < 0) {
+        pet2.set(LedSpriteProperty.Y, 4)
+    } else if (pet2.get(LedSpriteProperty.Y) > 4) {
+        pet2.set(LedSpriteProperty.Y, 0)
+    }
 }
 let pet2: game.LedSprite = null
 let pet1: game.LedSprite = null
@@ -23,6 +50,7 @@ let pet: game.LedSprite = null
 let boolean1 = false
 let tried = 0
 let mark = 0
+pets()
 mark = 10
 let hunger = 100
 tried = 20
@@ -60,7 +88,7 @@ basic.forever(function () {
     basic.pause(1000)
 })
 basic.forever(function () {
-    if (hunger > 0) {
+    if (hunger < 0) {
         boolean1 = true
         basic.showIcon(IconNames.Skull)
         basic.pause(1000)
