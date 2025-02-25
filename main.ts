@@ -25,9 +25,9 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     }
 })
 function pets () {
-    pet = game.createSprite(3, 2)
-    pet1 = game.createSprite(2, 2)
-    pet2 = game.createSprite(1, 2)
+    pet = game.createSprite(3, 3)
+    pet1 = game.createSprite(2, 3)
+    pet2 = game.createSprite(1, 3)
 }
 input.onLogoEvent(TouchButtonEvent.Released, function () {
     if (boolean1 == true) {
@@ -51,6 +51,7 @@ input.onLogoEvent(TouchButtonEvent.Released, function () {
     }
 })
 let temperature = 0
+let MARKQIUQIU: game.LedSprite = null
 let gogogo = 0
 let start_time = 0
 let pet2: game.LedSprite = null
@@ -108,6 +109,25 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
+    MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+    MARKQIUQIU.change(LedSpriteProperty.Y, 1)
+    if (MARKQIUQIU.get(LedSpriteProperty.Y) == 4) {
+        MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+    } else if (MARKQIUQIU.isTouching(pet)) {
+        mark += 1
+        basic.pause(100)
+        MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+    } else if (MARKQIUQIU.isTouching(pet1)) {
+        mark += 1
+        basic.pause(100)
+        MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+    } else if (MARKQIUQIU.isTouching(pet2)) {
+        mark += 1
+        basic.pause(100)
+        MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+    }
+})
+basic.forever(function () {
     if (pet.get(LedSpriteProperty.X) == 4) {
         pet.set(LedSpriteProperty.X, 0)
     } else if (pet.get(LedSpriteProperty.Y) == 4) {
@@ -118,8 +138,8 @@ basic.forever(function () {
     } else if (pet1.get(LedSpriteProperty.Y) == 4) {
         pet1.set(LedSpriteProperty.Y, 0)
     }
-    if (pet2.get(LedSpriteProperty.X) == 0) {
-        pet2.set(LedSpriteProperty.X, 4)
+    if (pet2.get(LedSpriteProperty.X) == 4) {
+        pet2.set(LedSpriteProperty.X, 0)
     } else if (pet2.get(LedSpriteProperty.Y) == 4) {
         pet2.set(LedSpriteProperty.Y, 0)
     }
@@ -171,6 +191,7 @@ basic.forever(function () {
         music.play(music.stringPlayable("E D G F B A C5 B ", 120), music.PlaybackMode.UntilDone)
         radio.setGroup(139)
         radio.sendString("COLD!!!")
+        basic.showString("COLD!!!")
         basic.pause(1000)
         if (tried > 5) {
             tried += -1
@@ -182,12 +203,15 @@ basic.forever(function () {
         music.play(music.stringPlayable("G F G A - F E D ", 120), music.PlaybackMode.UntilDone)
         radio.setGroup(139)
         radio.sendString("HOT!!!")
+        basic.showString("COLD!!!")
         basic.pause(1000)
         if (tried > 5) {
             tried += -1
+            basic.pause(1000)
         } else {
             hunger += -1
             mark += -1
+            basic.pause(1000)
         }
     }
 })
