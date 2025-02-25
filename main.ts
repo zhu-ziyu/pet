@@ -1,6 +1,16 @@
+input.onButtonPressed(Button.A, function () {
+    pet.change(LedSpriteProperty.X, 1)
+    pet1.change(LedSpriteProperty.X, 1)
+    pet2.change(LedSpriteProperty.X, 1)
+})
 input.onButtonPressed(Button.AB, function () {
     basic.showString("" + (mark))
     basic.pause(10000)
+})
+input.onButtonPressed(Button.B, function () {
+    pet.change(LedSpriteProperty.Y, 1)
+    pet1.change(LedSpriteProperty.Y, 1)
+    pet2.change(LedSpriteProperty.Y, 1)
 })
 input.onGesture(Gesture.Shake, function () {
     for (let index = 0; index < 5; index++) {
@@ -34,44 +44,50 @@ input.onLogoEvent(TouchButtonEvent.Released, function () {
             music.play(music.stringPlayable("C5 B A G F E D C ", 120), music.PlaybackMode.UntilDone)
             tried += 10 - mark
         } else {
-        	
+            tried += -1
+            basic.showString("" + (tried))
+            basic.pause(500)
         }
     }
 })
+let temperature = 0
 let gogogo = 0
+let start_time = 0
 let pet2: game.LedSprite = null
 let pet1: game.LedSprite = null
 let pet: game.LedSprite = null
-let start_time = 0
 let boolean1 = false
 let max_time = 0
 let time_elapsed = 0
+let tried = 0
 let hunger = 0
 let mark = 0
 pets()
 mark = 10
 hunger = 100
-let tried = 20
+tried = 20
 time_elapsed = 0
 max_time = 0
 boolean1 = false
 basic.forever(function () {
-    gogogo = randint(0, 2)
-    if (pet.get(LedSpriteProperty.X) == 0) {
-        pet.change(LedSpriteProperty.X, 1)
-        pet1.change(LedSpriteProperty.X, 1)
-        pet2.change(LedSpriteProperty.X, 1)
-    }
-    if (gogogo == 1) {
-        pet.change(LedSpriteProperty.X, 1)
-        pet1.change(LedSpriteProperty.X, 1)
-        pet2.change(LedSpriteProperty.X, 1)
-        basic.pause(1000)
-    } else if (gogogo == 2) {
-        pet.change(LedSpriteProperty.Y, 1)
-        pet1.change(LedSpriteProperty.Y, 1)
-        pet2.change(LedSpriteProperty.Y, 1)
-        basic.pause(1000)
+    if (boolean1 == true) {
+        gogogo = randint(0, 2)
+        if (pet.get(LedSpriteProperty.X) == 0) {
+            pet.change(LedSpriteProperty.X, 1)
+            pet1.change(LedSpriteProperty.X, 1)
+            pet2.change(LedSpriteProperty.X, 1)
+        }
+        if (gogogo == 1) {
+            pet.change(LedSpriteProperty.X, 1)
+            pet1.change(LedSpriteProperty.X, 1)
+            pet2.change(LedSpriteProperty.X, 1)
+            basic.pause(1000)
+        } else if (gogogo == 2) {
+            pet.change(LedSpriteProperty.Y, 1)
+            pet1.change(LedSpriteProperty.Y, 1)
+            pet2.change(LedSpriteProperty.Y, 1)
+            basic.pause(1000)
+        }
     }
 })
 basic.forever(function () {
@@ -92,15 +108,6 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    if (hunger > 50) {
-        hunger += -1
-        basic.pause(1000)
-    } else if (hunger < 50) {
-        hunger += -2
-        basic.pause(1000)
-    }
-})
-basic.forever(function () {
     if (pet.get(LedSpriteProperty.X) == 4) {
         pet.set(LedSpriteProperty.X, 0)
     } else if (pet.get(LedSpriteProperty.Y) == 4) {
@@ -118,7 +125,19 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
+    if (hunger > 50) {
+        hunger += -1
+        basic.pause(1000)
+    } else if (hunger < 50) {
+        hunger += -2
+        basic.pause(1000)
+    }
+})
+basic.forever(function () {
     if (mark < 0) {
+        pet.delete()
+        pet1.delete()
+        pet2.delete()
         basic.showIcon(IconNames.SmallHeart)
         basic.pause(100)
         basic.showIcon(IconNames.Heart)
@@ -144,5 +163,31 @@ basic.forever(function () {
         basic.pause(1000)
     } else if (tried == 0) {
         mark = 0
+    }
+})
+basic.forever(function () {
+    temperature = input.temperature()
+    if (temperature < 0) {
+        music.play(music.stringPlayable("E D G F B A C5 B ", 120), music.PlaybackMode.UntilDone)
+        radio.setGroup(139)
+        radio.sendString("COLD!!!")
+        basic.pause(1000)
+        if (tried > 5) {
+            tried += -1
+        } else {
+            hunger += -1
+            mark += -1
+        }
+    } else if (temperature > 40) {
+        music.play(music.stringPlayable("G F G A - F E D ", 120), music.PlaybackMode.UntilDone)
+        radio.setGroup(139)
+        radio.sendString("HOT!!!")
+        basic.pause(1000)
+        if (tried > 5) {
+            tried += -1
+        } else {
+            hunger += -1
+            mark += -1
+        }
     }
 })
