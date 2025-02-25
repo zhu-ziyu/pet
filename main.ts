@@ -181,16 +181,6 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    if (boolean1 == true) {
-        tried += -1
-        basic.showIcon(IconNames.Heart)
-        basic.showString("" + (tried))
-        basic.pause(1000)
-    } else if (tried == 0) {
-        mark = 0
-    }
-})
-basic.forever(function () {
     temperature = input.temperature()
     if (temperature < 0) {
         music.play(music.stringPlayable("E D G F B A C5 B ", 120), music.PlaybackMode.UntilDone)
@@ -218,5 +208,15 @@ basic.forever(function () {
             mark += -1
             basic.pause(1000)
         }
+    }
+})
+basic.forever(function () {
+    if (boolean1 == true) {
+        tried += -1
+        basic.showIcon(IconNames.Heart)
+        basic.showString("" + (tried))
+        basic.pause(1000)
+    } else if (tried == 0) {
+        mark = 0
     }
 })
