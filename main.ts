@@ -1,8 +1,3 @@
-input.onButtonPressed(Button.A, function () {
-    if (boolean1 == true) {
-    	
-    }
-})
 input.onButtonPressed(Button.AB, function () {
     basic.showString("" + (mark))
     basic.pause(10000)
@@ -10,6 +5,13 @@ input.onButtonPressed(Button.AB, function () {
 input.onGesture(Gesture.Shake, function () {
     for (let index = 0; index < 5; index++) {
         hunger += 1
+        basic.pause(100)
+    }
+})
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    if (boolean1 == true) {
+        start_time = input.runningTime()
+        basic.showString("" + (start_time))
     }
 })
 function pets () {
@@ -17,16 +19,41 @@ function pets () {
     pet1 = game.createSprite(2, 2)
     pet2 = game.createSprite(1, 2)
 }
+input.onLogoEvent(TouchButtonEvent.Released, function () {
+    if (boolean1 == true) {
+        time_elapsed = input.runningTime() - start_time
+        time_elapsed = time_elapsed / 1000
+        max_time += time_elapsed
+        if (max_time > 1) {
+            music.play(music.stringPlayable("G B A G C5 B A B ", 120), music.PlaybackMode.UntilDone)
+            hunger = 10
+        } else if (max_time > 2) {
+            music.play(music.stringPlayable("C D E F G A B C5 ", 120), music.PlaybackMode.UntilDone)
+            hunger = 10
+        } else if (max_time > 3) {
+            music.play(music.stringPlayable("C5 B A G F E D C ", 120), music.PlaybackMode.UntilDone)
+            tried += 10 - mark
+        } else {
+        	
+        }
+    }
+})
 let gogogo = 0
 let pet2: game.LedSprite = null
 let pet1: game.LedSprite = null
 let pet: game.LedSprite = null
+let start_time = 0
 let boolean1 = false
+let max_time = 0
+let time_elapsed = 0
+let hunger = 0
 let mark = 0
 pets()
 mark = 10
-let hunger = 100
+hunger = 100
 let tried = 20
+time_elapsed = 0
+max_time = 0
 boolean1 = false
 basic.forever(function () {
     gogogo = randint(0, 2)
@@ -112,6 +139,10 @@ basic.forever(function () {
 basic.forever(function () {
     if (boolean1 == true) {
         tried += -1
+        basic.showIcon(IconNames.Heart)
+        basic.showString("" + (tried))
         basic.pause(1000)
+    } else if (tried == 0) {
+        mark = 0
     }
 })
