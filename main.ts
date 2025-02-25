@@ -3,6 +3,10 @@ input.onButtonPressed(Button.A, function () {
     pet1.change(LedSpriteProperty.X, 1)
     pet2.change(LedSpriteProperty.X, 1)
 })
+function markqiuqiu () {
+    MARKQIUQIU.set(LedSpriteProperty.X, randint(0, 4))
+    MARKQIUQIU.set(LedSpriteProperty.Y, 0)
+}
 input.onButtonPressed(Button.AB, function () {
     basic.showString("" + (mark))
     basic.pause(10000)
@@ -51,13 +55,13 @@ input.onLogoEvent(TouchButtonEvent.Released, function () {
     }
 })
 let temperature = 0
-let MARKQIUQIU: game.LedSprite = null
 let gogogo = 0
 let start_time = 0
 let pet2: game.LedSprite = null
 let pet1: game.LedSprite = null
 let pet: game.LedSprite = null
 let boolean1 = false
+let MARKQIUQIU: game.LedSprite = null
 let max_time = 0
 let time_elapsed = 0
 let tried = 0
@@ -69,6 +73,7 @@ hunger = 100
 tried = 20
 time_elapsed = 0
 max_time = 0
+MARKQIUQIU = game.createSprite(randint(0, 4), 0)
 boolean1 = false
 basic.forever(function () {
     if (boolean1 == true) {
@@ -109,22 +114,22 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    MARKQIUQIU = game.createSprite(randint(0, 4), 0)
     MARKQIUQIU.change(LedSpriteProperty.Y, 1)
+    basic.pause(1000)
     if (MARKQIUQIU.get(LedSpriteProperty.Y) == 4) {
-        MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+        markqiuqiu()
     } else if (MARKQIUQIU.isTouching(pet)) {
         mark += 1
         basic.pause(100)
-        MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+        markqiuqiu()
     } else if (MARKQIUQIU.isTouching(pet1)) {
         mark += 1
         basic.pause(100)
-        MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+        markqiuqiu()
     } else if (MARKQIUQIU.isTouching(pet2)) {
         mark += 1
         basic.pause(100)
-        MARKQIUQIU = game.createSprite(randint(0, 4), 0)
+        markqiuqiu()
     }
 })
 basic.forever(function () {
